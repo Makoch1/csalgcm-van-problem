@@ -1,49 +1,34 @@
 from helpers import get_distance, get_points, get_start_point
+from typing import List
 
-def main():
-    start_point = get_start_point()
-    n_points = int(input("Enter amount of points / drop-offs"))
-    points = get_points(n_points)
+def solve_by_greedy(points: List[tuple[float, float]]) -> List[int]:
+    n_points = len(points)
 
-    # both visited and sequence are initialized with the start_point alr in
-    visited = {start_point} # set of visited nodes. implemented as set bc O(1) lookup
+    # both visited and sequence are initialized with the start index alr in
+    visited = {0} # set of visited nodes. implemented as set bc O(1) lookup
+    order = [0] # order
 
-    total_distance = 0.0 # total distance of the sequence
-    sequence = [start_point] # sequence, list of tuples
-
-    # while there are points to be visited still
-    while len(visited) < n_points + 1: # number of points + the start point
+    while len(visited) < n_points:
         nearest_distance = -1 # distance can never be -1 bc of square
-        nearest_point = (-1, -1) # default value to shut the warnings up
+        nearest_index = -1
 
-        curr_point = sequence[-1] # get last elemen of sequence
         # find the nearest point to the current point
-        for point in points:
-            if point in visited: # if alr visited, skip
+        curr_index = points[order[-1]] # get last elemen of order
+        for i in range(n_points):
+            if i in visited: # if alr visited, skip
                 continue
 
-            distance = get_distance(curr_point, point)
+            distance = get_distance(curr_index, points[i])
 
             # if no nearest distance yet, or distance is shorter than nearest distance
             if nearest_distance == -1 or nearest_distance > distance:
                 nearest_distance = distance
-                nearest_point = point
+                nearest_index = i
 
-        # add the distance and point to the running total
-        total_distance += nearest_distance
-        sequence.append(nearest_point)
+        order.append(nearest_index)
 
         # visit
-        visited.add(nearest_point)
+        visited.add(nearest_index)
 
-    # calculate from last point back to the start point
-    total_distance += get_distance(sequence[-1], start_point)
-    sequence.append(start_point)
-
-    # print off the calculated sequence and distance
-    print(sequence)
-    print(total_distance)
-
-if __name__ == "__main__":
-    main()
+    return order + [0] # add the start index to the end of the order
 
