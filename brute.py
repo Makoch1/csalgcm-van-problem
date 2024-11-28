@@ -1,4 +1,4 @@
-from helpers import get_distance, get_points, get_start_point
+from helpers import get_distance
 from itertools import permutations
 from typing import List
 

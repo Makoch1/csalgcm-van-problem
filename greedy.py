@@ -1,4 +1,4 @@
-from helpers import get_distance, get_points, get_start_point
+from helpers import get_distance
 from typing import List
 
 def solve_by_greedy(points: List[tuple[float, float]]) -> List[int]:

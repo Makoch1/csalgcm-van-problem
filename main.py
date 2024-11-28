@@ -8,7 +8,7 @@ def main():
     x_list, y_list = get_points_from_user()
     points = [(x, y) for x, y in zip(x_list, y_list)]
 
-    som_order = solve_by_som(x_list, y_list, visualize=False)
+    som_order = solve_by_som(x_list, y_list)
     print("Done with som!")
 
     greedy_order = solve_by_greedy(points)
