@@ -4,6 +4,18 @@ from minisom import MiniSom
 from typing import List
 
 def solve_by_som(x: List[float], y: List[float], visualize=True) -> List[int]:
+    """
+    TSP using SOM. Instead of taking a list of points, takes in a list of x coordinates, 
+    and a list of y coords, where a point is (x[0], y[0]). This is bc its easier to plot using matplotlib.
+    This returns a list of indices that represents the path / order. (e.g., [0, 2, 4, 3, 1, 0])
+
+    Args:
+        visualize (bool): determines whether to visualize the iterations of som. Defaults to True 
+        x: list of x coords
+        y: list of y coords
+
+    Returns: List of indices representing the order / path
+    """
     N_neurons = len(x) * 2 # n neurons is number of points * 2
     points = np.array([x,y]).T
 
